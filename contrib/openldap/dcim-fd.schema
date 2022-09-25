@@ -1,0 +1,35 @@
+##
+## dcim-fd.schema - Needed by Fusion Directory for managing DCIM configuration
+## OID 130
+
+# Attributes
+attributetype ( 1.3.6.1.4.1.38414.130.1.1 NAME 'fdDcimDatacenterRDN'
+        DESC 'FusionDirectory - DCIM Datacenter RDN Attributes'
+        EQUALITY caseExactIA5Match
+        SUBSTR caseExactIA5SubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26
+        SINGLE-VALUE)
+
+attributetype ( 1.3.6.1.4.1.38414.130.1.2 NAME 'fdDcimZoneRDN'
+        DESC 'FusionDirectory - DCIM Zone RDN Attributes'
+        EQUALITY caseExactIA5Match
+        SUBSTR caseExactIA5SubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26
+        SINGLE-VALUE)
+
+attributetype ( 1.3.6.1.4.1.38414.130.1.3 NAME 'fdDcimCabinetRDN'
+        DESC 'FusionDirectory - DCIM Cabinet RDN Attributes'
+        EQUALITY caseExactIA5Match
+        SUBSTR caseExactIA5SubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26
+        SINGLE-VALUE)
+
+
+# Object Class
+objectclass (1.3.6.1.4.1.38414.130.2.1 NAME 'fdDcimPluginConf'
+        SUP top AUXILIARY
+        DESC 'FusionDirectory -Dcim config'
+        MUST ()
+        MAY (fdDcimDatacenterRDN $ fdDcimZoneRDN $ fdDcimCabinetRDN))
+
+

@@ -1,0 +1,31 @@
+information :
+  name : "dcim"
+  description : "plugins which allow user add information about Datacenter where is what "
+  version : "0.1"
+  authors : ['antoine.gallavardin@free.fr']
+  status : "stable"
+  screenshotUrl:
+   - https://github.com/gallak/fusiondirectory-plugins-dcim/wiki/screenshot1.png
+  logoUrl : https://github.com/gallak/fusiondirectory-plugins-dcim/wiki/logo.png
+  tags : ["information","dcim","admin" ]
+  license : "GPLv2"
+  origin : "source"
+
+support :
+  provider : "community"
+  homeUrl : "https://github.com/gallak/fusiondirectory-plugins-dcim"
+  ticketUrl : "https://github.com/gallak/fusiondirectory-plugins-dcim/issues"
+  discussionUrl : "https://github.com/gallak/fusiondirectory-plugins-dcim/wiki"
+  downloadUrl: "https://github.com/gallak/fusiondirectory-plugins-dcim.tgz"
+  schemaUrl : "https://schemas.fusiondirectory.info/"
+
+requirement:
+  fdVersion : 1.4
+  phpVersion : 7.2.0
+
+content :
+  phpClassList : ['dcim']
+  ldapObjectList : ['fdNotesObject']
+  ldapAttributeList : ['fdNotes']
+  fileList :
+
