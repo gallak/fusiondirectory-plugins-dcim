@@ -73,7 +73,8 @@ class cabinet extends simplePlugin
         'attrs' => [
                 new SystemsAttribute(
                   _('systems'), _('Systems'),
-                  'fdDcimCabinetSystems', TRUE),
+                  'fdDcimCabinetSystems', TRUE
+                ),
         ]
       ],
     ];
