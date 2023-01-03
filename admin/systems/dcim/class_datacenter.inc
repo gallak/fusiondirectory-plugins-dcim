@@ -20,7 +20,7 @@
  */
 
 
-
+ 
 class datacenter extends simplePlugin
 {
 
@@ -52,6 +52,7 @@ class datacenter extends simplePlugin
         'name'  => _('Information'),
         'class' => ['fullwidth'],
         'attrs' => [
+                new BaseSelectorAttribute(get_ou('DcimZoneRDN')),
                 new StringAttribute(
                   _('Name'), _('Name of datacenter'),
                   'cn', TRUE),
@@ -60,7 +61,7 @@ class datacenter extends simplePlugin
                   'description', TRUE),
                 new UsersAttribute(
                   _('Responsables'), _('Responsables of Datacenter'),
-                  'fdDcimDatacenterResponsables', FALSE),
+                  'fdDcimDatacenterManagerDn', FALSE),
         ]
       ],
       'datacenterLocalization' => [
@@ -79,15 +80,15 @@ class datacenter extends simplePlugin
                   _('Address'), _('Business postal address'),
                   'postalAddress', FALSE
                 ),
-                new CompositeAttribute (
+                new CompositeAttribute(
                   _('GPS Coordinate'),
                   'fdDcimDatacenterGPS',
                   [
-                    new FloatAttribute(_('GPS X'), _('Name of datacenter'),'gpsX',FALSE,'',''),
-                    new FloatAttribute(_('GPS Y'), _('Name of datacenter'),'gpsY',FALSE,'',''),
+                    new StringAttribute(_('GPS X'), _('Latitude'),'coord_X',FALSE),
+                    new StringAttribute(_('GPS Y'), _('Longitude'),'coord_Y',FALSE),
                   ],
-                  '%f;%f',
-                  '%f;%f',
+                  '/([0-9.-]*):([0-9.-]*)/',
+                  '%s:%s',
                   )
         ]
       ],

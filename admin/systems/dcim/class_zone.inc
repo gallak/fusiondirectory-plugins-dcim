@@ -36,10 +36,10 @@ class zone extends simplePlugin
       'plObjectType'  => ['zone' => [
         'name'        => _('zone'),
         'icon'        => 'geticon.php?context=applications&icon=zone&size=16',
-        'ou'          => get_ou('fdDcimZoneRDN'),
+        'ou'          => get_ou('DcimZoneRDN'),
         'mainAttr'    => 'cn',
       ]],
-      'plSearchAttrs'  => ['description'],
+      'plSearchAttrs'  => ['description','fdDcimZoneDatacenter'],
 
       'plProvidedAcls'  => parent::generatePlProvidedAcls(static::getAttributesInfo())
     ];
@@ -52,6 +52,7 @@ class zone extends simplePlugin
         'name'  => _('zone'),
         'class' => ['fullwidth'],
         'attrs' => [
+                new BaseSelectorAttribute(get_ou('DcimZoneRDN')),
                 new StringAttribute(
                   _('Name'), _('Zone Name'),
                   'cn', TRUE),
@@ -60,13 +61,15 @@ class zone extends simplePlugin
                   'description', TRUE),
                 new UsersAttribute(
                   _('Authorized Person'), _('Authorized Person'),
-                  'fdDcimZoneAuthorizedPerson', TRUE),
+                  'fdDcimZoneAuthorizedPersonDn', FALSE),
                 new ObjectSelectAttribute(
                   _('Datacenter'), _('Datacenter'),
-                  'fdDcimZoneDatacenter', FALSE,
+                  'fdDcimZoneDatacenter', TRUE,
                   ['datacenter']),
                 ]
       ]
     ];
   }
+ 
+
 }

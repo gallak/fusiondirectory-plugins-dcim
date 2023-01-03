@@ -33,12 +33,6 @@ class dcimManagement extends management
       'plManages'     => ['datacenter', 'zone', 'cabinet'],
     ];
   }
-
-  protected function setUpListing ()
-  {
-    /* Set baseMode to FALSE */
-    $this->listing  = new managementListing($this, FALSE);
-  }
 }
 
 
