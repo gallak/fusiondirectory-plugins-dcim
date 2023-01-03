@@ -11,104 +11,104 @@ msgstr ""
 "Project-Id-Version: FusionDirectory 1.4\n"
 "POT-Creation-Date: 2023-01-03 22:00+0100\n"
 "PO-Revision-Date: 2023-01-03 22:00+0100\n"
-"Language-Team: English\n"
-"Language: en\n"
+"Language-Team: French\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "Cabinet must be set"
-msgstr "Cabinet must be set"
+msgstr "Le rack doit être spécifié"
 
 msgid "Current position of component \"%s\" in cabinet conflict with \"%s\""
-msgstr "Current position of component \"%s\" in cabinet conflict with \"%s\""
+msgstr "La position du composant \"%s\" dans le rack entre en conflit avec \"%s\""
 
 msgid "Address"
-msgstr "Address"
+msgstr "Addresse"
 
 msgid "Authorized Person"
-msgstr "Authorized Person"
+msgstr "Personne autorisée"
 
 msgid "Branch in which Cabinet details info will be stored"
-msgstr "Branch in which Cabinet details info will be stored"
+msgstr "Branche de stockage des détails des racks"
 
 msgid "Branch in which Datacenter details info will be stored"
-msgstr "Branch in which Datacenter details info will be stored"
+msgstr "Branche de stockage des détails des datacentres"
 
 msgid "Branch in which Zone details info will be stored"
-msgstr "Branch in which Zone details info will be stored"
+msgstr "Branche de stockage des détails des zones"
 
 msgid "Business postal address"
-msgstr "Business postal address"
+msgstr "Adresse postale professionnelle"
 
 msgid "Cabinet Name"
-msgstr "Cabinet Name"
+msgstr "Nom du rack"
 
 msgid "Cabinet RDN"
-msgstr "Cabinet RDN"
+msgstr "RDN des racks"
 
 msgid "Cabinet name"
-msgstr "Cabinet name"
+msgstr "Nom du rack"
 
 msgid "Common component"
-msgstr "Common component"
+msgstr "Composant commun"
 
 msgid "Content of Cabinet"
-msgstr "Content of Cabinet"
+msgstr "Contenu du rack"
 
 msgid "Cooling"
-msgstr "Cooling"
+msgstr "Refroidissement"
 
 msgid "Cooling capacity (in Btu)"
-msgstr "Cooling capacity (in Btu)"
+msgstr "Capacité de refroidissement (en Btu)"
 
 msgid "DCIM"
 msgstr "DCIM"
 
 msgid "DCIM Component"
-msgstr "DCIM Component"
+msgstr "Composant DCIM"
 
 msgid "DCIM configuration"
-msgstr "DCIM configuration"
+msgstr "Configuration"
 
 msgid "DCIM management"
-msgstr "DCIM management"
+msgstr "Gestion DCIM"
 
 msgid "Datacenter"
-msgstr "Datacenter"
+msgstr "Datacentre"
 
 msgid "Datacenter RDN"
-msgstr "Datacenter RDN"
+msgstr "RDN des datacentres"
 
 msgid "Dedicated component"
-msgstr "Dedicated component"
+msgstr "Composant dédié"
 
 msgid "Description"
 msgstr "Description"
 
 msgid "Description Zone"
-msgstr "Description Zone"
+msgstr "Description de la zone"
 
 msgid "Description of Datacenter"
-msgstr "Description of Datacenter"
+msgstr "Description du datacentre"
 
 msgid "FusionDirectory DCIM plugin configuration"
-msgstr "FusionDirectory DCIM plugin configuration"
+msgstr "Configuration du plugin DCIM"
 
 msgid "GPS Coordinate"
-msgstr "GPS Coordinate"
+msgstr "Coordonnées GPS"
 
 msgid "GPS X"
-msgstr "GPS X"
+msgstr "Longitude GPS"
 
 msgid "GPS Y"
-msgstr "GPS Y"
+msgstr "Latitude GPS"
 
 msgid "Image of the component Back"
-msgstr "Image of the component Back"
+msgstr "Image de l'arrière du composant"
 
 msgid "Image of the component Front"
-msgstr "Image of the component Front"
+msgstr "Image de l'avant du composant"
 
 msgid "Information"
 msgstr "Information"
@@ -117,7 +117,7 @@ msgid "Latitude"
 msgstr "Latitude"
 
 msgid "Localization"
-msgstr "Localization"
+msgstr "Localisation"
 
 msgid "Location"
 msgstr "Location"
@@ -126,97 +126,97 @@ msgid "Longitude"
 msgstr "Longitude"
 
 msgid "Manage Datacenter / Zone and cabinets"
-msgstr "Manage Datacenter / Zone and cabinets"
+msgstr "Gestion des datacentres, zones et racks"
 
 msgid "Management server"
-msgstr "Management server"
+msgstr "Serveur de gestion"
 
 msgid "Name"
-msgstr "Name"
+msgstr "Nom"
 
 msgid "Name of datacenter"
-msgstr "Name of datacenter"
+msgstr "Nom du datacenter"
 
 msgid "Image of back"
-msgstr "Image of back"
+msgstr "Image de l'arrière"
 
 msgid "Image of front"
-msgstr "Image of front"
+msgstr "Image de l'avant"
 
 msgid "Position"
 msgstr "Position"
 
 msgid "Position of the Component"
-msgstr "Position of the Component"
+msgstr "Position du composant"
 
 msgid "Power"
-msgstr "Power"
+msgstr "Energie"
 
 msgid "Power Capacity (in Kw)"
-msgstr "Power Capacity (in Kw)"
+msgstr "Puissance élèctrique (en Kw)"
 
 msgid "Responsables"
 msgstr "Responsables"
 
 msgid "Responsables of Datacenter"
-msgstr "Responsables of Datacenter"
+msgstr "Responsables du datacenter"
 
 msgid "Size"
-msgstr "Size"
+msgstr "Taille"
 
 msgid "Size of the Cabinet"
-msgstr "Size of the Cabinet"
+msgstr "Taille du rack"
 
 msgid "Size of the Component"
-msgstr "Size of the Component"
+msgstr "Taille du composant"
 
 msgid "Start sequence"
-msgstr "Start sequence"
+msgstr "Séquence de démarrage"
 
 msgid "State"
-msgstr "State"
+msgstr "Etat"
 
 msgid "Stop sequence"
-msgstr "Stop sequence"
+msgstr "Séquence d'arrêt"
 
 msgid "Technical"
-msgstr "Technical"
+msgstr "Technique"
 
 msgid "Type"
 msgstr "Type"
 
 msgid "Type of component"
-msgstr "Type of component"
+msgstr "Type de composant"
 
 msgid "Zone"
 msgstr "Zone"
 
 msgid "Zone Name"
-msgstr "Zone Name"
+msgstr "Nom de la zone"
 
 msgid "Zone RDN"
-msgstr "Zone RDN"
+msgstr "RDN des zones"
 
 msgid "cabinet"
-msgstr "cabinet"
+msgstr "rack"
 
 msgid "cabinet Information"
-msgstr "cabinet Information"
+msgstr "Information du rack"
 
 msgid "datacenter"
-msgstr "datacenter"
+msgstr "Datacentre"
 
 msgid "zone"
 msgstr "zone"
 
 msgid "Empty location"
-msgstr "Empty location"
+msgstr "Emplacement vide"
 
 msgid "Rear of"
-msgstr "Rear of"
+msgstr "Arrière de "
 
 msgid "Front"
-msgstr "Front"
+msgstr "Devant"
 
 msgid "Rear"
-msgstr "Rear"
+msgstr "Arrière"
