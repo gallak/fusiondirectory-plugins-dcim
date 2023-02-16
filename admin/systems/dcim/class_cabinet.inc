@@ -59,6 +59,8 @@ class cabinet extends simplePlugin
     $ldap->search('(&(objectClass=fdDcimComponent)(fdDcimComponentCabinetId='.$this->dn.'))', ['fdDcimComponentPosition','cn','description','fdDcimComponentSize','fdDcimComponentRearImage','fdDcimComponentFrontImage','dn']);
     while ($component = $ldap->fetch()) {
         // -1 is necessary,  position are inversed
+
+
         $allComponents[$component['fdDcimComponentPosition'][0] -1 + $component['fdDcimComponentSize'][0]]= array(
                                 'position' => $component['fdDcimComponentPosition'][0],
                                 'size' => $component['fdDcimComponentSize'][0],

@@ -65,12 +65,12 @@ class componentDcim extends simplePlugin
             new dcimCabinetSelectAttribute(
                   _('Cabinet name'), _('Cabinet Name'),
                   'fdDcimComponentCabinetId', FALSE),
-            new IntAttribute(
+            new StringAttribute(
                   _('Size'), _('Size of the Component'),
-                  'fdDcimComponentSize', FALSE,0,42,1),
-            new IntAttribute(
+                  'fdDcimComponentSize', FALSE,1),
+            new StringAttribute(
                   _('Position'), _('Position of the Component'),
-                  'fdDcimComponentPosition', FALSE,0,42,1),
+                  'fdDcimComponentPosition', FALSE,1),
             new ImageAttribute(
                   _('Image of front'), _('Image of the component Front'),
                   'fdDcimComponentFrontImage', FALSE,
@@ -90,8 +90,9 @@ class componentDcim extends simplePlugin
 
 
 public function hostTypesChanged(){
+  $currentHostType=$this->attributesAccess['fdDcimComponentType']->getValue();
   // show correct interface following host type
-  if ($this->fdDcimComponentType == "virtual"){
+  if ($currentHostType == "virtual"){
     $this->attributesAccess['fdDcimComponentCabinetId']->setVisible(FALSE);
     $this->attributesAccess['fdDcimComponentCabinetId']->setValue(FALSE);
     $this->attributesAccess['fdDcimComponentSize']->setVisible(FALSE);
@@ -104,7 +105,7 @@ public function hostTypesChanged(){
     $this->attributesAccess['fdDcimComponentRearImage']->setValue(FALSE);
     $this->attributesAccess['fdDcimVirtualManagementServer']->setVisible(TRUE);
   }
-  if ($this->fdDcimComponentType == "physical"){
+  if ($currentHostType == "physical"){
     $this->attributesAccess['fdDcimComponentCabinetId']->setVisible(TRUE);
     $this->attributesAccess['fdDcimComponentSize']->setVisible(TRUE);
     $this->attributesAccess['fdDcimComponentPosition']->setVisible(TRUE);
@@ -112,6 +113,8 @@ public function hostTypesChanged(){
     $this->attributesAccess['fdDcimComponentRearImage']->setVisible(TRUE);
     $this->attributesAccess['fdDcimVirtualManagementServer']->setVisible(FALSE);
     $this->attributesAccess['fdDcimVirtualManagementServer']->setValue(FALSE);
+    //unset($this->attributesAccess['fdDcimVirtualManagementServer']);
+    //unset($this->fdDcimVirtualManagementServer);
   }
 
 
@@ -120,11 +123,10 @@ public function hostTypesChanged(){
 
   function __construct ($dn = NULL, $object = NULL, $parent = NULL, $mainTab = FALSE)
   {
- 
     parent::__construct($dn, $object, $parent, $mainTab);
-
     $hostTypes=['physical','virtual'];
     $this->attributesAccess['fdDcimComponentType']->setChoices($hostTypes);
+    $this->hostTypesChanged();
     $this->attributesAccess['fdDcimComponentType']->setSubmitForm('hostTypesChanged');
   }
 
@@ -192,20 +194,22 @@ public function hostTypesChanged(){
   public function prepare_save (): array
   {
     global $config;
-    
-      if (empty($currentCabinet)){
-        $msg=_("Cabinet must be set");
-      }else{
-        $currentSize=$this->attributesAccess['fdDcimComponentSize']->getValue();
-        $currentPosition=$this->attributesAccess['fdDcimComponentPosition']->getValue();
-        $msg=$this->checkCabinet($this->cabinetContent($currentCabinet),$currentPosition,$currentSize);
-      }
-      if ( ! empty($msg) ){
-        $error = new FusionDirectoryError(
-         htmlescape($msg)
-        );
-        $error->display();
+      $currentCabinet = $this->fdDcimComponentCabinetId;
+      if ( $this->attributesAccess['fdDcimComponentType']->getValue() == 'physical' ) {
+        if ( empty($currentCabinet) ){
+          $msg=_("Cabinet must be set");
+        }else{
+          $currentSize=$this->attributesAccess['fdDcimComponentSize']->getValue();
+          $currentPosition=$this->attributesAccess['fdDcimComponentPosition']->getValue();
+          $msg=$this->checkCabinet($this->cabinetContent($currentCabinet),$currentPosition,$currentSize);
         }
+        if ( ! empty($msg) ){
+          $error = new FusionDirectoryError(
+           htmlescape($msg)
+          );
+          $error->display();
+          }
+      }
     return parent::prepare_save();
 
   }
