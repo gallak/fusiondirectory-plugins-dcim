@@ -1,21 +1,42 @@
 # fusiondirectory-plugins-dcim
 
 This is a plugin for FusionDirectory that add some informations about Datacenter Informatio Management
-It provide Datacenter > zone > cabinet
+It provide Building > room > rack component
 It's based  on taxonomy plugins
 
 ## Why this plugin ?
 
-It was designed to be a small tool for managing simple "datacenter" 
+It was designed to be a small tool farg eLarge It system
 
-## Todo
+## fusiondirectory-plugins-dcim
 
-every thing
-WORK In Progress
+FusionDirectory could be used for managing a lot of component such physical sevrer, network component. It a great solution for a simpel asset management.
+By the way it could useful to have a more hierarchical view before management compoment.
+This is the goal of DCIM ( as Data Center Information Management).
+It allow to create :
+  - Datacenter information
+  - Zone ( subpart of a datacenter)
+  - Rack ( subpart of Zone)
+
+For each level, there is specific information like :
+  - For Datacenter and Zone :
+    - manager
+    - physical Address
+    - electrical and colling information
+  - For Rack
+    - size of rack 
+  - For each system, a tab DCIM is avalaible which following information :
+    - start/stop sequence in case of a full Shutdown
+    - if it's a physical device :
+      - physical place inside a rack
+      - width ( in Rack unit)
+    - if it's a virtual device
+      - server management (such vcenter for vmware)
 
 ## How to install
 
-`git https://github.com/gallak/fusiondirectory-plugins-dcim.git
+`cd /usr/local/src/
+git https://github.com/gallak/fusiondirectory-plugins-dcim.git
 mv fusiondirectory-plugins-dcim dcim`
 
 ### Installation of ldap schema
@@ -25,18 +46,37 @@ mv fusiondirectory-plugins-dcim dcim`
 
 ### Installation of plugin
 
-```fusiondirectory-setup --set-fd_home=/usr/local/share/fusiondirectory --install-plugins
-Setting fd_home to /usr/share/fusiondirectory
+```
+fusiondirectory-plugin-manager --set-fd_home=/usr/local/share/fusiondirectory  --plugin-name=dcim --plugins-archive=/usr/local/src/gallak --install-plugin
+Setting fd_home to /usr/local/share/fusiondirectory
+plugin dcim will be used
+Plugins folder /usr/local/src/gallak will be used
 Installing FusionDirectory's plugins
-Where is your plugins archive or folder?:
-<complete current path>            
-Available plugins:
-1:dcim
-
-fusiondirectory-setup --update-cache --update-locales
+Installing plugin dcim
+Plugin record exist : cn=dcim,ou=plugins,ou=fusiondirectory,dc=demo,dc=fusion
+Deleting it !
+Create plugin record
+Scanning and update Class.cache and translations
 ```
 
 ### usage
 
+Create at least a Datacenter
+Create a zone inside the Datacenter
+Create a Rack inside the Zone
+
+For each component, you could provide information (position, size, ...)
 
 
+## simple Roadmap
+
+It depens of you, but in order to have a complet DCIM and a centralized CMDB (Configuration Management Data Base)
+We could imaginate a simple call to dedicated plateform in order to get main information for each type of component
+Simple example :
+  - network component : call [Netdisco](https://netdisco.org/) API
+  - worsktation : call to [GLPI](https://glpi-project.org) or [OPSI](https://opsi.org) API
+  - Virtual server : call to [VMware](https://www.vmware.com) or [Proxmox](https://pve.proxmox.org)
+  - physical Server : call to direct management Card ( ILO / IdRac)
+
+All those informations should be available trough FusionDirectory API and (hopefully) in a common Format
+    
