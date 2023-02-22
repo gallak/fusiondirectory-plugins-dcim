@@ -24,6 +24,8 @@ class componentDcim extends simplePlugin
 
   protected $displayHeader  = TRUE;
   protected $loaded = FALSE;
+  
+  public $locationsArray=['cabinet' => 'fdDcimComponentCabinetDn','zone' => 'fdDcimComponentZoneDn','virtual' => 'fdDcimVirtualManagementServer'];
 
   static function plInfo (): array
   {
@@ -47,24 +49,30 @@ class componentDcim extends simplePlugin
       'CommonComponent' => [
         'name'  => _('Common component'),
         'attrs' => [
-            new SelectAttribute(
-                  _('Type'), _('Type of component'),
-                  'fdDcimComponentType', TRUE,[],'',[]),
-            new IntAttribute(
-                  _('Start sequence'), _('Start sequence'),
-                  'fdDcimComponentStartSequence', FALSE,0,10,1),
-            new IntAttribute(
-                  _('Stop sequence'), _('Stop sequence'),
-                  'fdDcimComponentStopSequence', FALSE,0,10,1),
+          new SelectAttribute(
+            _('Location'), _('Type of Location'),
+             'fdDcimFakeLocation', TRUE,[],'',[]),
+          new IntAttribute(
+            _('Start sequence'), _('Start sequence'),
+              'fdDcimComponentStartSequence', FALSE,0,10,0),
+          new IntAttribute(
+            _('Stop sequence'), _('Stop sequence'),
+              'fdDcimComponentStopSequence', FALSE,0,10,0),
+          new UsersAttribute(
+            _('Responsables'), _('Responsables of Component'),
+              'fdDcimComponentManagerDn', FALSE),
         ],
       ],
 
       'DedicatedComponent' => [
-        'name'  => _('Dedicated component'),
+        'name'  => _('Physical component'),
         'attrs' => [ 
             new dcimCabinetSelectAttribute(
                   _('Cabinet name'), _('Cabinet Name'),
-                  'fdDcimComponentCabinetId', FALSE),
+                  'fdDcimComponentCabinetDn', FALSE),
+            new dcimZoneSelectAttribute(
+                    _('Zone name'), _('Zone Name'),
+                    'fdDcimComponentZoneDn', FALSE),
             new StringAttribute(
                   _('Size'), _('Size of the Component'),
                   'fdDcimComponentSize', FALSE,1),
@@ -84,55 +92,40 @@ class componentDcim extends simplePlugin
                   'fdDcimVirtualManagementServer', FALSE,
                   ['Server']),
         ],
+        'template' => get_template_path('dcimComponent.tpl', TRUE, dirname(__FILE__)),
       ],
     ];
   }
 
 
-public function hostTypesChanged(){
-  $currentHostType=$this->attributesAccess['fdDcimComponentType']->getValue();
-  // show correct interface following host type
-  if ($currentHostType == "virtual"){
-    $this->attributesAccess['fdDcimComponentCabinetId']->setVisible(FALSE);
-    $this->attributesAccess['fdDcimComponentCabinetId']->setValue(FALSE);
-    $this->attributesAccess['fdDcimComponentSize']->setVisible(FALSE);
-    $this->attributesAccess['fdDcimComponentSize']->setValue(FALSE);
-    $this->attributesAccess['fdDcimComponentPosition']->setVisible(FALSE);
-    $this->attributesAccess['fdDcimComponentPosition']->setValue(FALSE);
-    $this->attributesAccess['fdDcimComponentFrontImage']->setVisible(FALSE);
-    $this->attributesAccess['fdDcimComponentFrontImage']->setValue(FALSE);
-    $this->attributesAccess['fdDcimComponentRearImage']->setVisible(FALSE);
-    $this->attributesAccess['fdDcimComponentRearImage']->setValue(FALSE);
-    $this->attributesAccess['fdDcimVirtualManagementServer']->setVisible(TRUE);
-  }
-  if ($currentHostType == "physical"){
-    $this->attributesAccess['fdDcimComponentCabinetId']->setVisible(TRUE);
-    $this->attributesAccess['fdDcimComponentSize']->setVisible(TRUE);
-    $this->attributesAccess['fdDcimComponentPosition']->setVisible(TRUE);
-    $this->attributesAccess['fdDcimComponentFrontImage']->setVisible(TRUE);
-    $this->attributesAccess['fdDcimComponentRearImage']->setVisible(TRUE);
-    $this->attributesAccess['fdDcimVirtualManagementServer']->setVisible(FALSE);
-    $this->attributesAccess['fdDcimVirtualManagementServer']->setValue(FALSE);
-    //unset($this->attributesAccess['fdDcimVirtualManagementServer']);
-    //unset($this->fdDcimVirtualManagementServer);
+
+  public function locationChanged(){
+    $this->fdDcimFakeLocation=$this->attributesAccess['fdDcimFakeLocation']->getValue();
   }
 
 
-  
-}
 
   function __construct ($dn = NULL, $object = NULL, $parent = NULL, $mainTab = FALSE)
   {
     parent::__construct($dn, $object, $parent, $mainTab);
-    $hostTypes=['physical','virtual'];
-    $this->attributesAccess['fdDcimComponentType']->setChoices($hostTypes);
-    $this->hostTypesChanged();
-    $this->attributesAccess['fdDcimComponentType']->setSubmitForm('hostTypesChanged');
+  
+    $this->attributesAccess['fdDcimFakeLocation']->setInLdap(FALSE);
+    $this->attributesAccess['fdDcimFakeLocation']->setChoices(array_keys($this->locationsArray));
+
+    foreach ($this->locationsArray as $location => $field){
+      if (! empty($this->$field)){
+        $this->attributesAccess['fdDcimFakeLocation']->setValue($location);
+      }
+    }
+
+    $this->locationChanged();
+    $this->attributesAccess['fdDcimFakeLocation']->setSubmitForm('locationChanged');
   }
 
   public function render (): string
   {
     $smarty = get_smarty();
+    $smarty->assign('locationType',$this->fdDcimFakeLocation);
     return parent::render();
   }
 
@@ -158,7 +151,7 @@ public function hostTypesChanged(){
 
     // insert all component already declared in this cabinet
     $ldap->cd($config->current['BASE']);
-    $ldap->search('(&(objectClass=fdDcimComponent)(fdDcimComponentCabinetId='.$cabinet_dn.'))', ['fdDcimComponentPosition','cn','fdDcimComponentSize']);
+    $ldap->search('(&(objectClass=fdDcimComponent)(fdDcimComponentCabinetDn='.$cabinet_dn.'))', ['fdDcimComponentPosition','cn','fdDcimComponentSize']);
     while ($component = $ldap->fetch()) {
       $cName=$component['cn'][0];
       $cSize=$component['fdDcimComponentSize'][0];
@@ -194,24 +187,32 @@ public function hostTypesChanged(){
   public function prepare_save (): array
   {
     global $config;
-      $currentCabinet = $this->fdDcimComponentCabinetId;
-      if ( $this->attributesAccess['fdDcimComponentType']->getValue() == 'physical' ) {
-        if ( empty($currentCabinet) ){
-          $msg=_("Cabinet must be set");
-        }else{
-          $currentSize=$this->attributesAccess['fdDcimComponentSize']->getValue();
-          $currentPosition=$this->attributesAccess['fdDcimComponentPosition']->getValue();
-          $msg=$this->checkCabinet($this->cabinetContent($currentCabinet),$currentPosition,$currentSize);
-        }
-        if ( ! empty($msg) ){
-          $error = new FusionDirectoryError(
-           htmlescape($msg)
-          );
-          $error->display();
-          }
-      }
-    return parent::prepare_save();
+    switch ($this->fdDcimFakeLocation) {
+      case 'virtual':
+        // empty field not necessary for virtual location
+        $this->fdDcimComponentCabinetDn="";
+        $this->fdDcimComponentZoneDn="";
+        $this->fdDcimComponentSize="";
+        $this->fdDcimComponentPosition="";
+        $this->fdDcimComponentFrontImage="";
+        $this->fdDcimComponentRearImage="";
 
+        break;
+      case 'cabinet':
+        // empty field not necessary for cabinet location
+        $this->fdDcimVirtualManagementServer="";
+        break;
+
+      case 'zone':
+        // empty field not necessary for zone location
+        $this->fdDcimComponentCabinetDn="";
+        $this->fdDcimVirtualManagementServer="";
+        $this->fdDcimComponentSize="";
+        $this->fdDcimComponentPosition="";
+  
+        break;
+     }
+    return parent::prepare_save();
   }
 
 }

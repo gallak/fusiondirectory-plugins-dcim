@@ -62,8 +62,6 @@ class dcimZoneSelectAttribute extends SelectAttribute
 
 }
 
-
-
 class dcimCabinetSelectAttribute extends SelectAttribute
 {
   public function getAllCabinets()
