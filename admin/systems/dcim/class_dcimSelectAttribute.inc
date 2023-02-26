@@ -29,9 +29,9 @@ class dcimZoneSelectAttribute extends SelectAttribute
     
     $allZones=array();
     $ldap->cd($config->current['BASE']);
-    $ldap->search('(objectClass=fdDcimZone)', ['dn','fdDcimZoneDatacenter','cn','description']);
+    $ldap->search('(objectClass=fdDcimZone)', ['dn','fdDcimZoneDatacenterDn','cn','description']);
     while ($zone = $ldap->fetch()) {
-        $dc=ldap_explode_dn($zone['fdDcimZoneDatacenter'][0],1)[0];
+        $dc=ldap_explode_dn($zone['fdDcimZoneDatacenterDn'][0],1)[0];
         $allZones[$zone['dn']]= array( 'zoneCn' => $dc." > ".$zone['cn'][0],
                                        'zoneDescription' => $zone['description'][0],
                                         );
@@ -73,17 +73,17 @@ class dcimCabinetSelectAttribute extends SelectAttribute
 
     
     $allCabinets=array();
-    $ldap->search('(objectClass=fdDcimCabinet)', ['dn','fdDcimCabinetZone','cn','description']);
+    $ldap->search('(objectClass=fdDcimCabinet)', ['dn','fdDcimCabinetZoneDn','cn','description']);
     while ($cabinet = $ldap->fetch()) {
 
         
-        $ldap_bis->cd($cabinet['fdDcimCabinetZone'][0]);
+        $ldap_bis->cd($cabinet['fdDcimCabinetZoneDn'][0]);
     
-        $ldap_bis->search('(objectClass=fdDcimZone)', ['fdDcimZoneDatacenter','cn']);
+        $ldap_bis->search('(objectClass=fdDcimZone)', ['fdDcimZoneDatacenterDn','cn']);
 
         while ($record = $ldap_bis->fetch()) {
             $zone=$record['cn'][0];
-            $dc=ldap_explode_dn($record['fdDcimZoneDatacenter'][0],1)[0];    
+            $dc=ldap_explode_dn($record['fdDcimZoneDatacenterDn'][0],1)[0];    
 
         $allCabinets[$cabinet['dn']]= array('cabinetCn' => $dc." > ".$zone." > ".$cabinet['cn'][0],
                                        'cabinetDescription' => $cabinet['description'][0],

@@ -39,10 +39,39 @@ class zone extends simplePlugin
         'ou'          => get_ou('DcimZoneRDN'),
         'mainAttr'    => 'cn',
       ]],
-      'plSearchAttrs'  => ['description','fdDcimZoneDatacenter'],
+      'plSearchAttrs'  => ['description','fdDcimZoneDatacenterDn'],
 
       'plProvidedAcls'  => parent::generatePlProvidedAcls(static::getAttributesInfo())
     ];
+  }
+
+  private function getClassIndex( $className){
+    return(pluglist::pluginInfos($className)['INDEX']);
+
+  } 
+  function getZoneContent (): array
+  {
+    global $config;
+    $ldap = $config->get_ldap_link();
+    $allElements = array();
+    $ldap->search('(|(fdDcimComponentZoneDn='.$this->dn.')(fdDcimCabinetZoneDn='.$this->dn.'))',
+     ['cn','description','dn','objectClass']);
+     
+    while ($element = $ldap->fetch()) {
+        // -1 is necessary,  position are inversed
+        if (in_array('fdServer',$element['objectClass'])){
+          $link=htmlspecialchars('main.php?plug='.$this->getClassIndex('systemManagement').'&reset=1&act=listing_edit&dn='.$element['dn']);
+        }elseif(in_array('fdServer',$element['objectClass'])){
+          $link=htmlspecialchars('main.php?plug='.$this->getClassIndex('dcimManagement').'&reset=1&act=listing_edit&dn='.$element['dn']);
+        }
+        $allElements[$element['dn']] = array(
+                                'description' => $element['description'][0],
+                                'name' => $element['cn'][0],
+                                'link' => $link
+                              );
+    }
+    var_dump($allElements);
+    return($allElements);
   }
 
   static function getAttributesInfo (): array
@@ -64,12 +93,30 @@ class zone extends simplePlugin
                   'fdDcimZoneAuthorizedPersonDn', FALSE),
                 new ObjectSelectAttribute(
                   _('Datacenter'), _('Datacenter'),
-                  'fdDcimZoneDatacenter', TRUE,
+                  'fdDcimZoneDatacenterDn', TRUE,
                   ['datacenter']),
                 ]
-      ]
+        ],
+      'content' => [
+        'name'  => _('Content of Zone'),
+        'class' => ['fullwidth'],
+        'attrs' => [
+          new FakeAttribute('fdDcimZoneDesign'),
+          ],
+        'template' => get_template_path('zone.tpl', TRUE, dirname(__FILE__)),
+        ],
     ];
   }
  
+  function __construct ($dn = NULL, $object = NULL, $parent = NULL, $mainTab = FALSE)
+  {
+    global $config;
+    parent::__construct($dn, $object, $parent, $mainTab);
+    //$smarty = get_smarty();
+    //$this->fdDcimCabinetDesign=$this->getCabinetContent();
+    //$this->fdDcimCabinetSize_bis=$this->fdDcimCabinetSize;
+    var_dump($this->getZoneContent());
+
+  }
 
 }

@@ -25,7 +25,7 @@ class componentDcim extends simplePlugin
   protected $displayHeader  = TRUE;
   protected $loaded = FALSE;
   
-  public $locationsArray=['cabinet' => 'fdDcimComponentCabinetDn','zone' => 'fdDcimComponentZoneDn','virtual' => 'fdDcimVirtualManagementServer'];
+  public $locationsArray=['cabinet' => 'fdDcimComponentCabinetDn','zone' => 'fdDcimComponentZoneDn','virtual' => 'fdDcimVirtualManagementServerDn'];
 
   static function plInfo (): array
   {
@@ -89,7 +89,7 @@ class componentDcim extends simplePlugin
                   $config->get_cfg_value('MaxAvatarSize', 200), $config->get_cfg_value('MaxAvatarSize', 200), 'jpeg'),
             new ObjectSelectAttribute(
                   _('Management server'), _('Management server'),
-                  'fdDcimVirtualManagementServer', FALSE,
+                  'fdDcimVirtualManagementServerDn', FALSE,
                   ['Server']),
         ],
         'template' => get_template_path('dcimComponent.tpl', TRUE, dirname(__FILE__)),
@@ -200,13 +200,13 @@ class componentDcim extends simplePlugin
         break;
       case 'cabinet':
         // empty field not necessary for cabinet location
-        $this->fdDcimVirtualManagementServer="";
+        $this->fdDcimVirtualManagementServerDn="";
         break;
 
       case 'zone':
         // empty field not necessary for zone location
         $this->fdDcimComponentCabinetDn="";
-        $this->fdDcimVirtualManagementServer="";
+        $this->fdDcimVirtualManagementServerDn="";
         $this->fdDcimComponentSize="";
         $this->fdDcimComponentPosition="";
   
