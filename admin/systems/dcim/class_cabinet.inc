@@ -95,7 +95,7 @@ class cabinet extends simplePlugin
                   'fdDcimCabinetSize', TRUE,0,42,42),
                  new dcimZoneSelectAttribute(
                   _('Zone'), _('Zone'),
-                  'fdDcimCabinetZone', TRUE,
+                  'fdDcimCabinetZoneDn', TRUE,
                 ),
                 ]
       ],

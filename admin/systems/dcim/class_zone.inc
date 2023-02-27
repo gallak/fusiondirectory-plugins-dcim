@@ -48,11 +48,14 @@ class zone extends simplePlugin
   private function getClassIndex( $className){
     return(pluglist::pluginInfos($className)['INDEX']);
 
-  } 
+  }
+
+
   function getZoneContent (): array
   {
     global $config;
     $ldap = $config->get_ldap_link();
+    
     $allElements = array();
     $ldap->search('(|(fdDcimComponentZoneDn='.$this->dn.')(fdDcimCabinetZoneDn='.$this->dn.'))',
      ['cn','description','dn','objectClass']);
@@ -61,16 +64,19 @@ class zone extends simplePlugin
         // -1 is necessary,  position are inversed
         if (in_array('fdServer',$element['objectClass'])){
           $link=htmlspecialchars('main.php?plug='.$this->getClassIndex('systemManagement').'&reset=1&act=listing_edit&dn='.$element['dn']);
-        }elseif(in_array('fdServer',$element['objectClass'])){
+          $type='server';
+        }elseif(in_array('fdDcimCabinet',$element['objectClass'])){
+          $type='cabinet';
           $link=htmlspecialchars('main.php?plug='.$this->getClassIndex('dcimManagement').'&reset=1&act=listing_edit&dn='.$element['dn']);
+
         }
-        $allElements[$element['dn']] = array(
-                                'description' => $element['description'][0],
-                                'name' => $element['cn'][0],
-                                'link' => $link
-                              );
+        $allElements[$type][]=array(
+          'description' => $element['description'][0],
+          'name' => $element['cn'][0],
+          'link' => $link,
+          'type' => $type
+        );
     }
-    var_dump($allElements);
     return($allElements);
   }
 
@@ -79,7 +85,6 @@ class zone extends simplePlugin
     return [
       'zone' => [
         'name'  => _('zone'),
-        'class' => ['fullwidth'],
         'attrs' => [
                 new BaseSelectorAttribute(get_ou('DcimZoneRDN')),
                 new StringAttribute(
@@ -98,8 +103,7 @@ class zone extends simplePlugin
                 ]
         ],
       'content' => [
-        'name'  => _('Content of Zone'),
-        'class' => ['fullwidth'],
+        'name'  => _('Content of zone'),
         'attrs' => [
           new FakeAttribute('fdDcimZoneDesign'),
           ],
@@ -112,10 +116,8 @@ class zone extends simplePlugin
   {
     global $config;
     parent::__construct($dn, $object, $parent, $mainTab);
-    //$smarty = get_smarty();
-    //$this->fdDcimCabinetDesign=$this->getCabinetContent();
-    //$this->fdDcimCabinetSize_bis=$this->fdDcimCabinetSize;
-    var_dump($this->getZoneContent());
+    $smarty = get_smarty();
+    $this->fdDcimZoneDesign=$this->getZoneContent();
 
   }
 

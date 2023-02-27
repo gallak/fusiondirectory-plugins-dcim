@@ -45,12 +45,38 @@ class datacenter extends simplePlugin
     ];
   }
 
+  private function getClassIndex( $className){
+    return(pluglist::pluginInfos($className)['INDEX']);
+
+  }
+
+
+  function getDataCenterContent (): array
+  {
+    global $config;
+    $ldap = $config->get_ldap_link();
+    $allElements = array();
+    $ldap->cd($config->current['BASE']);
+    $ldap->search('(&(fdDcimZoneDatacenterDn='.$this->dn.')(objectClass=*))',['cn','description','dn','objectClass']);
+     
+    while ($element = $ldap->fetch()) {
+      $allElements[]=array(
+        'description' => $element['description'][0],
+        'name' => $element['cn'][0],
+        'link' => $link=htmlspecialchars('main.php?plug='.$this->getClassIndex('dcimManagement').'&reset=1&act=listing_edit&dn='.$element['dn'])
+      );
+    }
+    
+    return($allElements);
+  }
+
+
+
   static function getAttributesInfo (): array
   {
     return [
       'datacenterInfo' => [
         'name'  => _('Information'),
-        'class' => ['fullwidth'],
         'attrs' => [
                 new BaseSelectorAttribute(get_ou('DcimZoneRDN')),
                 new StringAttribute(
@@ -66,7 +92,6 @@ class datacenter extends simplePlugin
       ],
       'datacenterLocalization' => [
         'name'  => _('Localization'),
-        'class' => ['fullwidth'],
         'attrs' => [
                 new StringAttribute(
                   _('Location'), _('Location'),
@@ -94,7 +119,6 @@ class datacenter extends simplePlugin
       ],
       'datacenterTechnical' => [
         'name'  => _('Technical'),
-        'class' => ['fullwidth'],
         'attrs' => [
                 new StringAttribute(
                   _('Power'), _('Power Capacity (in Kw)'),
@@ -104,7 +128,24 @@ class datacenter extends simplePlugin
                   'fdDcimCoolingCapacity',FALSE),
         ] 
       ],
+      'content' => [
+        'name'  => _('Content of dataCenter'),
+        'attrs' => [
+          new FakeAttribute('fdDcimDatacenterDesign'),
+          ],
+        'template' => get_template_path('datacenter.tpl', TRUE, dirname(__FILE__)),
+        ],
     ];
+  }
+
+
+  function __construct ($dn = NULL, $object = NULL, $parent = NULL, $mainTab = FALSE)
+  {
+    global $config;
+    parent::__construct($dn, $object, $parent, $mainTab);
+    $smarty = get_smarty();
+    $this->fdDcimDatacenterDesign=$this->getDataCenterContent();
+
   }
 
 }

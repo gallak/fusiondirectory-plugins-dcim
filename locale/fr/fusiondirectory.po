@@ -198,7 +198,7 @@ msgid "Zone RDN"
 msgstr "RDN des zones"
 
 msgid "cabinet"
-msgstr "rack"
+msgstr "Rack"
 
 msgid "cabinet Information"
 msgstr "Information du rack"
@@ -220,3 +220,12 @@ msgstr "Devant"
 
 msgid "Rear"
 msgstr "Arrière"
+
+msgid "List of zone"
+msgstr "Liste des zones"
+
+msgid "Content of dataCenter"
+msgstr "Contenu des datacentres"
+
+msgid "Content of zone"
+msgstr "Contenu de la zone"
