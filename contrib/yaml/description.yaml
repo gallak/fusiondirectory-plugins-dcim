@@ -1,16 +1,18 @@
 information :
   name : "dcim"
-  description : "plugins which allow user add information about Datacenter where is what "
+  description : "plugins which allow user add information about Datacenter like 'where is what' ?"
   version : "0.1"
   authors : ['antoine.gallavardin@free.fr']
   status : "stable"
   screenshotUrl:
-   - https://github.com/gallak/fusiondirectory-plugins-dcim/blob/main/docs/details-datacenter.png
-   - https://github.com/gallak/fusiondirectory-plugins-dcim/raw/main/docs/dc-zone-rack.png
-   - https://github.com/gallak/fusiondirectory-plugins-dcim/raw/main/docs/details-component.png
-   - https://github.com/gallak/fusiondirectory-plugins-dcim/raw/main/docs/component.png
-  logoUrl : https://github.com/gallak/fusiondirectory-plugins-dcim/wiki/logo.png
-  tags : ["information","dcim","admin" ]
+   - https://raw.githubusercontent.com/gallak/fusiondirectory-plugins-dcim/main/docs/details-datacenter.png
+   - https://raw.githubusercontent.com/gallak/fusiondirectory-plugins-dcim/main/docs/dc-zone-rack.png
+   - https://raw.githubusercontent.com/gallak/fusiondirectory-plugins-dcim/main/docs/dcim.png
+   - https://raw.githubusercontent.com/gallak/fusiondirectory-plugins-dcim/main/docs/details-component.png
+   - https://raw.githubusercontent.com/gallak/fusiondirectory-plugins-dcim/main/docs/details-zone.png
+   - https://raw.githubusercontent.com/gallak/fusiondirectory-plugins-dcim/main/docs/component.png
+  logoUrl : https://raw.githubusercontent.com/gallak/fusiondirectory-plugins-dcim/main/html/themes/breezy/icons/48/apps/dcim.png
+  tags : ["information","dcim","datacenter", "zone","rack","inventory","network","server","reporting"]
   license : "GPLv2"
   origin : "source"
 
@@ -31,35 +33,39 @@ content :
   ldapObjectList : ['fdDcimDatacenter', 'fdDcimZone', 'fdDcimCabinet', 'fdDcimComponent']
   ldapAttributeList : ['fdDcimCabinetZoneDn', 'fdDcimCabinetSize', 'fdDcimZoneAuthorizedPersonDn', 'fdDcimZoneDatacenterDn', 'fdDcimZoneCode', 'fdDcimDatacenterManagerDn', 'fdDcimDatacenterGPS', 'fdDcimPowerCapacity', 'fdDcimCoolingCapacity','fdDcimComponentManagerDn', 'fdDcimComponentCabinetDn', 'fdDcimComponentPosition', 'fdDcimComponentSize', 'fdDcimComponentRearImage', 'fdDcimComponentFrontImage', 'fdDcimComponentZoneDn', 'fdDcimComponentStartSequence', 'fdDcimComponentStopSequence', 'fdDcimVirtualManagementServerDn']
   fileList :
-    - ./admin/systems/dcim/cabinet.tpl
-    - ./admin/systems/dcim/class_zone.inc
-    - ./admin/systems/dcim/class_datacenter.inc
-    - ./admin/systems/dcim/class_dcimSelectAttribute.inc
-    - ./admin/systems/dcim/class_dcimManagement.inc
-    - ./admin/systems/dcim/class_componentDcim.inc
-    - ./admin/systems/dcim/datacenter.tpl
-    - ./admin/systems/dcim/class_componentZone.inc
-    - ./admin/systems/dcim/zone.tpl
-    - ./admin/systems/dcim/class_cabinet.inc
-    - ./admin/systems/dcim/dcimComponent.tpl
-    - ./control.yaml
-    - ./docs/details-zone.png
-    - ./docs/details-component.png
-    - ./docs/dcim.png
-    - ./docs/component.png
-    - ./docs/dc-zone-rack.png
-    - ./docs/details-datacenter.png
-    - ./html/themes/breezy/icons/48/apps/cabinet.png
-    - ./html/themes/breezy/icons/48/apps/dcim.png
-    - ./html/themes/breezy/icons/48/apps/zone.png
-    - ./html/themes/breezy/icons/48/apps/notes.png
-    - ./html/themes/breezy/icons/48/apps/datacenter.png
-    - ./html/themes/breezy/icons/16/apps/cabinet.png
-    - ./html/themes/breezy/icons/16/apps/dcim.png
-    - ./html/themes/breezy/icons/16/apps/zone.png
-    - ./html/themes/breezy/icons/16/apps/datacenter.png
-    - ./locale/fr/fusiondirectory.po
-    - ./locale/en/fusiondirectory.po
-    - ./contrib/openldap/dcim-fd.schema
-    - ./contrib/openldap/dcim.schema
-    - ./config/dcim/class_dcimConfig.inc
+    - './admin/systems/dcim/cabinet.tpl'
+    - './admin/systems/dcim/class_zone.inc'
+    - './admin/systems/dcim/class_datacenter.inc'
+    - './admin/systems/dcim/class_dcimSelectAttribute.inc'
+    - './admin/systems/dcim/class_dcimManagement.inc'
+    - './admin/systems/dcim/cabinet.tpl.full'
+    - './admin/systems/dcim/class_componentDcim.inc'
+    - './admin/systems/dcim/datacenter.tpl'
+    - './admin/systems/dcim/class_componentZone.inc'
+    - './admin/systems/dcim/zone.tpl'
+    - './admin/systems/dcim/class_cabinet.inc'
+    - './admin/systems/dcim/dcimComponent.tpl'
+    - './LICENSE'
+    - './README.md'
+    - './docs/details-zone.png'
+    - './docs/details-component.png'
+    - './docs/dcim.png'
+    - './docs/component.png'
+    - './docs/dc-zone-rack.png'
+    - './docs/details-datacenter.png'
+    - './html/themes/breezy/icons/48/apps/cabinet.png'
+    - './html/themes/breezy/icons/48/apps/dcim.png'
+    - './html/themes/breezy/icons/48/apps/zone.png'
+    - './html/themes/breezy/icons/48/apps/notes.png'
+    - './html/themes/breezy/icons/48/apps/datacenter.png'
+    - './html/themes/breezy/icons/16/apps/cabinet.png'
+    - './html/themes/breezy/icons/16/apps/dcim.png'
+    - './html/themes/breezy/icons/16/apps/zone.png'
+    - './html/themes/breezy/icons/16/apps/datacenter.png'
+    - './locale/fr/fusiondirectory.po'
+    - './locale/en/fusiondirectory.po'
+    - './contrib/yaml/description.yaml'
+    - './contrib/openldap/dcim-fd.schema'
+    - './contrib/openldap/dcim.schema'
+    - './NOTES'
+    - './config/dcim/class_dcimConfig.inc'
