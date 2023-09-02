@@ -35,6 +35,7 @@ content :
   fileList :
     - './admin/systems/dcim/cabinet.tpl'
     - './admin/systems/dcim/class_zone.inc'
+    - './admin/systems/dcim/class_applicationDcim.inc'
     - './admin/systems/dcim/class_datacenter.inc'
     - './admin/systems/dcim/class_dcimSelectAttribute.inc'
     - './admin/systems/dcim/class_dcimManagement.inc'

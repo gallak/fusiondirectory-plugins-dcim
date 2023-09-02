@@ -94,6 +94,40 @@ class componentDcim extends simplePlugin
         ],
         'template' => get_template_path('dcimComponent.tpl', TRUE, dirname(__FILE__)),
       ],
+      'Links' => [
+        'name'  => _('Links definition'),
+        'class' => ['fullwidth'],
+        'attrs' => [
+        new OrderedArrayAttribute(
+          new CharSeparatedCompositeAttribute(
+            _("Links"),
+            'fdDcimLinks',
+              [
+                new ObjectSelectAttribute(
+                  _('Component A'), _('Component A'),
+                  'fdDcimComA', FALSE,
+                  ['Server','application']),
+                new StringAttribute (_('Links'),    _('Links'), 'Links'),
+                new ObjectSelectAttribute(
+                    _('Component B'), _('Component B'),
+                    'fdDcimComB', FALSE,
+                    ['Server','application']),
+              ],
+            ';',
+            '',
+            _('Interface Design'),
+            
+          ),
+          FALSE,[],TRUE),]
+      ],
+
+
+
+
+
+
+
+
     ];
   }
 
