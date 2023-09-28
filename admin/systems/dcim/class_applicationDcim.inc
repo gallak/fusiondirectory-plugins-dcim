@@ -19,6 +19,7 @@
  */
 
 
+
 class applicationDcim extends simplePlugin
 {
 
@@ -42,10 +43,14 @@ class applicationDcim extends simplePlugin
   static function getAttributesInfo (): array
   {
     global $config;
+
+    $referential=explode($config->get_cfg_value('TaxonomySeparator'),$config->get_cfg_value('DcimApplicationInstanceRef'));
+
+
     return [
 
-      'dcimApplication' => [
-        'name'  => _('DCIM Application'),
+      'dcimApplicationProperties' => [
+        'name'  => _('Application properties'),
         'attrs' => [
 
           new UsersAttribute(
@@ -58,7 +63,35 @@ class applicationDcim extends simplePlugin
               _('Description of Application'), _('Type of Location'),
                'fdDcimApplicationDescription', TRUE,''),
           ],
-      ],
+        ],
+        'dcimApplicationDependancies' => [
+          'name'  => _('Links definition'),
+          //'class' => ['fullwidth'],
+          'attrs' => [
+          new OrderedArrayAttribute(
+            new CharSeparatedCompositeAttribute(
+              _("Dependancies"),
+              'fdDcimApplicationDependancies',
+                [
+                  new TaxonomySelectAttribute(
+                    _('Instance'), _('Instance of component'),
+                    'fdDcimAppInstance', FALSE, '',$referential[0], $referential[1]
+                  ),
+                  new ObjectSelectAttribute(
+                    _('Component A'), _('Component A'),
+                    'fdDcimAppComponent', FALSE,
+                    ['Server','application']),
+                  new StringAttribute (_('Indications'),    _('Indications'), 'Indications'),
+                ],
+              ';',
+              '',
+              ''
+              //_('Interface Design'),
+              
+            ),
+            FALSE,[],TRUE),]
+        ],
     ];
   }
 }
+

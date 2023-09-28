@@ -54,7 +54,17 @@ class dcimConfig extends simplePlugin
             _('Cabinet RDN'), _('Branch in which Cabinet details info will be stored'),
             'fdDcimCabinetRDN', TRUE,
             'ou=dcim'
-          ),          
+          ),
+          new StringAttribute(
+            _('Application Referentiel Instance'), _('Referentiel for Instance'),
+            'fdDcimApplicationInstanceRef', TRUE,
+            'DSI \ INSTANCE'
+          ),
+          new StringAttribute(
+            _('Applications Referentiel Links'), _('Referentiel for Links'),
+            'fdDcimApplicationLinksRef', TRUE,
+            'DSI \ LINKS'
+          ),
         ]
       ],
     ];

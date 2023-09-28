@@ -44,6 +44,10 @@ class componentDcim extends simplePlugin
   static function getAttributesInfo (): array
   {
     global $config;
+
+    $referential=explode($config->get_cfg_value('TaxonomySeparator'),$config->get_cfg_value('DcimApplicationLinksRef'));
+ 
+    
     return [
 
       'CommonComponent' => [
@@ -103,19 +107,23 @@ class componentDcim extends simplePlugin
             _("Links"),
             'fdDcimLinks',
               [
+                //new ObjectSelectAttribute(
+                //  _('Component A'), _('Component A'),
+                //  'fdDcimComA', FALSE,
+                //  ['Server','application']),
+                new TaxonomySelectAttribute(
+                    _('Links'), _('Links'),
+                    'Links', TRUE, '',$referential[0], $referential[1]
+                  ),  
+                //new StringAttribute (_('Links'),    _('Links'), 'Links'),
                 new ObjectSelectAttribute(
-                  _('Component A'), _('Component A'),
-                  'fdDcimComA', FALSE,
-                  ['Server','application']),
-                new StringAttribute (_('Links'),    _('Links'), 'Links'),
-                new ObjectSelectAttribute(
-                    _('Component B'), _('Component B'),
-                    'fdDcimComB', FALSE,
-                    ['Server','application']),
+                    _('Component Destination'), _('Component Destination'),
+                    'fdDcimComponentDestination', FALSE,
+                    ['Server']),
               ],
             ';',
             '',
-            _('Interface Design'),
+            '',
             
           ),
           FALSE,[],TRUE),]

@@ -70,3 +70,4 @@ content :
     - './contrib/openldap/dcim.schema'
     - './NOTES'
     - './config/dcim/class_dcimConfig.inc'
+    - './include/class_TaxonomySelectAttribute.inc'

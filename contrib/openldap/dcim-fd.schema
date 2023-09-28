@@ -24,12 +24,25 @@ attributetype ( 1.3.6.1.4.1.38414.130.1.3 NAME 'fdDcimCabinetRDN'
         SYNTAX 1.3.6.1.4.1.1466.115.121.1.26
         SINGLE-VALUE)
 
+attributetype ( 1.3.6.1.4.1.38414.130.1.4 NAME 'fdDcimApplicationInstanceRef'
+        DESC 'FusionDirectory - DCIM Application Referential'
+        EQUALITY caseExactIA5Match
+        SUBSTR caseExactIA5SubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26
+        SINGLE-VALUE)
+
+attributetype ( 1.3.6.1.4.1.38414.130.1.5 NAME 'fdDcimApplicationLinksRef'
+        DESC 'FusionDirectory - DCIM Application Referential'
+        EQUALITY caseExactIA5Match
+        SUBSTR caseExactIA5SubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26
+        SINGLE-VALUE)
 
 # Object Class
 objectclass (1.3.6.1.4.1.38414.130.2.1 NAME 'fdDcimPluginConf'
         SUP top AUXILIARY
         DESC 'FusionDirectory -Dcim config'
         MUST ()
-        MAY (fdDcimDatacenterRDN $ fdDcimZoneRDN $ fdDcimCabinetRDN))
+        MAY (fdDcimDatacenterRDN $ fdDcimZoneRDN $ fdDcimCabinetRDN $ fdDcimApplicationLinksRef $ fdDcimApplicationInstanceRef))
 
 
