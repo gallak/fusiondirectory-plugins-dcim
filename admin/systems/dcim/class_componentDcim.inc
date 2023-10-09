@@ -107,19 +107,14 @@ class componentDcim extends simplePlugin
             _("Links"),
             'fdDcimLinks',
               [
-                //new ObjectSelectAttribute(
-                //  _('Component A'), _('Component A'),
-                //  'fdDcimComA', FALSE,
-                //  ['Server','application']),
                 new TaxonomySelectAttribute(
                     _('Links'), _('Links'),
                     'Links', TRUE, '',$referential[0], $referential[1]
                   ),  
-                //new StringAttribute (_('Links'),    _('Links'), 'Links'),
-                new ObjectSelectAttribute(
+                new dcimLinksSelectAttribute(
                     _('Component Destination'), _('Component Destination'),
-                    'fdDcimComponentDestination', FALSE,
-                    ['Server']),
+                    'fdDcimComponentDestination', FALSE,['fdIpamSubnet','fdServer']
+                    ),
               ],
             ';',
             '',
@@ -128,11 +123,6 @@ class componentDcim extends simplePlugin
           ),
           FALSE,[],TRUE),]
       ],
-
-
-
-
-
 
 
 

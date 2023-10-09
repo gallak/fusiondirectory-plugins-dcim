@@ -116,3 +116,76 @@ class dcimCabinetSelectAttribute extends SelectAttribute
     }
 
 }
+
+
+class dcimLinksSelectAttribute extends SelectAttribute
+{
+  public function getAllLinks()
+    {
+
+    global $config;
+    $allLinks=array();
+    foreach (array_filter($this->choices) as $element) {
+        
+        $ldap = $config->get_ldap_link(); 
+        $ldap->search('(objectClass='.$element.')', ['dn','cn','description']);
+        while ($item = $ldap->fetch()) {
+            $allLinks[$item['dn']]= array('LinksCn' => $item['cn'][0],
+                                          'LinksDescription' => $item['description'][0],
+                                            );
+                                        }
+        }
+
+
+
+
+    //$ldapNet = $config->get_ldap_link();
+    //$ldapSrv = $config->get_ldap_link();
+    //$ldapNet->cd($config->current['BASE']);
+    //$ldapSrv->cd($config->current['BASE']);
+
+    
+    
+    //$ldapNet->search('(objectClass=fdIpamSubnet)', ['dn','cn','description']);
+    //$ldapSrv->search('(objectClass=fdServer)', ['dn','cn','description']);
+
+    //while ($item = $ldapNet->fetch()) {
+    //    $allLinks[$item['dn']]= array('LinksCn' => "NET  > ".$item['cn'][0],
+    //                                  'LinksDescription' => $item['description'][0],
+    //                                    );
+    //                                }
+        
+
+    //while ($item = $ldapSrv->fetch()) {
+    //    $allLinks[$item['dn']]= array('LinksCn' => "SERV  > ".$item['cn'][0],
+    //                                  'LinksDescription' => $item['description'][0],
+    //                                   );
+    //                                }
+        
+    //var_dump($allLinks);
+    return($allLinks);
+  }
+
+
+    function setParent (&$plugin)
+    {
+        parent::setParent($plugin);
+        if (is_object($this->plugin)) {
+            $this->updateChoices();
+        }
+    }
+
+    function updateChoices ()
+    {
+        global $config;
+        $linksDn    = [];
+        $linksDescription = [];
+        foreach ($this->getAllLinks() as $name => $content){
+            $linksDescription[] = $content['LinksCn']." (".$content['LinksDescription'].")";
+            $linksDn[] = $name;
+          
+        }
+    $this->setChoices($linksDn, $linksDescription);
+    }
+
+}
