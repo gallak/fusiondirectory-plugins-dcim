@@ -85,7 +85,7 @@ Simple example :
   - network component : call [Netdisco](https://netdisco.org/) API
   - worsktation : call to [GLPI](https://glpi-project.org) or [OPSI](https://opsi.org) API
   - Virtual server : call to [VMware](https://www.vmware.com) or [Proxmox](https://pve.proxmox.org)
-  - physical Server : call to direct management Card ( ILO / IdRac)
+  - physical Server : call to direct management Card ( ILO / IDRAC : https://downloads.dell.com/solutions/dell-management-solution-resources/Implementation%20of%20the%20DMTF%20Redfish%20API%20on%20Dell%20EMC%20PowerEdge%20Servers.pdf)
 
 All those informations should be available trough FusionDirectory API and (hopefully) in a common Format
     
